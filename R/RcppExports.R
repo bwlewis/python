@@ -2,74 +2,74 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 py_initialize <- function(pythonSharedLibrary) {
-    invisible(.Call('tensorflow_py_initialize', PACKAGE = 'rpy', pythonSharedLibrary))
+    invisible(.Call('tensorflow_py_initialize', PACKAGE = 'python', pythonSharedLibrary))
 }
 
 py_finalize <- function() {
-    invisible(.Call('tensorflow_py_finalize', PACKAGE = 'rpy'))
+    invisible(.Call('tensorflow_py_finalize', PACKAGE = 'python'))
 }
 
 py_is_none <- function(x) {
-    .Call('tensorflow_py_is_none', PACKAGE = 'rpy', x)
+    .Call('tensorflow_py_is_none', PACKAGE = 'python', x)
 }
 
 py_str <- function(x) {
-    .Call('tensorflow_py_str', PACKAGE = 'rpy', x)
+    .Call('tensorflow_py_str', PACKAGE = 'python', x)
 }
 
 py_print <- function(x) {
-    invisible(.Call('tensorflow_py_print', PACKAGE = 'rpy', x))
+    invisible(.Call('tensorflow_py_print', PACKAGE = 'python', x))
 }
 
 py_is_callable <- function(x) {
-    .Call('tensorflow_py_is_callable', PACKAGE = 'rpy', x)
+    .Call('tensorflow_py_is_callable', PACKAGE = 'python', x)
 }
 
 py_is_function <- function(x) {
-    .Call('tensorflow_py_is_function', PACKAGE = 'rpy', x)
+    .Call('tensorflow_py_is_function', PACKAGE = 'python', x)
 }
 
 py_is_null_xptr <- function(x) {
-    .Call('tensorflow_py_is_null_xptr', PACKAGE = 'rpy', x)
+    .Call('tensorflow_py_is_null_xptr', PACKAGE = 'python', x)
 }
 
 py_list_attributes <- function(x) {
-    .Call('tensorflow_py_list_attributes', PACKAGE = 'rpy', x)
+    .Call('tensorflow_py_list_attributes', PACKAGE = 'python', x)
 }
 
 py_has_attr <- function(x, name) {
-    .Call('tensorflow_py_has_attr', PACKAGE = 'rpy', x, name)
+    .Call('tensorflow_py_has_attr', PACKAGE = 'python', x, name)
 }
 
 py_get_attr <- function(x, name) {
-    .Call('tensorflow_py_get_attr', PACKAGE = 'rpy', x, name)
+    .Call('tensorflow_py_get_attr', PACKAGE = 'python', x, name)
 }
 
 py_get_attribute_types <- function(x, attributes) {
-    .Call('tensorflow_py_get_attribute_types', PACKAGE = 'rpy', x, attributes)
+    .Call('tensorflow_py_get_attribute_types', PACKAGE = 'python', x, attributes)
 }
 
 py_to_r <- function(x) {
-    .Call('tensorflow_py_to_r', PACKAGE = 'rpy', x)
+    .Call('tensorflow_py_to_r', PACKAGE = 'python', x)
 }
 
 py_call <- function(x, args, keywords = NULL) {
-    .Call('tensorflow_py_call', PACKAGE = 'rpy', x, args, keywords)
+    .Call('tensorflow_py_call', PACKAGE = 'python', x, args, keywords)
 }
 
 py_dict <- function(keys, items) {
-    .Call('tensorflow_py_dict', PACKAGE = 'rpy', keys, items)
+    .Call('tensorflow_py_dict', PACKAGE = 'python', keys, items)
 }
 
 py_module_impl <- function(module) {
-    .Call('tensorflow_py_module_impl', PACKAGE = 'rpy', module)
+    .Call('tensorflow_py_module_impl', PACKAGE = 'python', module)
 }
 
 py_run_string <- function(code) {
-    invisible(.Call('tensorflow_py_run_string', PACKAGE = 'rpy', code))
+    invisible(.Call('tensorflow_py_run_string', PACKAGE = 'python', code))
 }
 
 py_run_file <- function(file) {
-    invisible(.Call('tensorflow_py_run_file', PACKAGE = 'rpy', file))
+    invisible(.Call('tensorflow_py_run_file', PACKAGE = 'python', file))
 }
 

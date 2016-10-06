@@ -1,4 +1,4 @@
-Package: rpy
+Package: python
 Type: Package
 Title: R Interface to TensorFlow
 Version: 0.3.0

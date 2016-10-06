@@ -3,8 +3,8 @@
 #'
 #'
 #' @docType package
-#' @name rpy
-#' @useDynLib rpy
+#' @name python 
+#' @useDynLib python
 #' @importFrom Rcpp evalCpp
 NULL
 
@@ -16,7 +16,7 @@ NULL
 
   # add our python scripts to the search path
   py_run_string(paste0("import sys; sys.path.append('",
-                       system.file("python", package = "rpy") ,
+                       system.file("python", package = "python") ,
                        "')"))
 
   # call tf onLoad handler
