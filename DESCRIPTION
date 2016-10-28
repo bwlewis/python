@@ -1,6 +1,6 @@
 Package: python
 Type: Package
-Title: R Interface to TensorFlow
+Title: Python Bindings for R
 Version: 0.3.0
 Authors@R: c(
   person("JJ", "Allaire", role = c("aut", "cre"),
@@ -20,8 +20,7 @@ Description:
 License: Apache License 2.0
 URL: https://github.com/rstudio/tensorflow
 BugReports: https://github.com/rstudio/tensorflow/issues
-SystemRequirements: Python (>= 2.7.0) with header files and shared library;
-    TensorFlow (https://www.tensorflow.org/)
+SystemRequirements: Python (>= 2.7.0) with header files and shared library
 Encoding: UTF-8
 LazyData: true
 Depends:
@@ -31,5 +30,3 @@ Imports:
     Rcpp (>= 0.12.7)
 LinkingTo: Rcpp
 RoxygenNote: 5.0.0
-Suggests:
-    testthat

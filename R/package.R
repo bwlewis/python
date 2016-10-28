@@ -1,4 +1,3 @@
-
 #' Not TensorFlow for R
 #'
 #'
@@ -18,15 +17,6 @@ NULL
   py_run_string(paste0("import sys; sys.path.append('",
                        system.file("python", package = "python") ,
                        "')"))
-
-  # call tf onLoad handler
-#  tf_on_load(libname, pkgname)
-}
-
-
-.onAttach <- function(libname, pkgname) {
-  # call tf onAttach handler
-#  tf_on_attach(libname, pkgname)
 }
 
 .onUnload <- function(libpath) {
