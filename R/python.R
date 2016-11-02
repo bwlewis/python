@@ -56,6 +56,7 @@ str.tensorflow.builtin.object <- function(object, ...) {
   }
 }
 
+#' @importFrom Matrix sparseMatrix
 #' @export
 `$.tensorflow.builtin.object` <- function(x, name) {
   attrib <- py_get_attr(x, name)
@@ -76,7 +77,7 @@ str.tensorflow.builtin.object <- function(object, ...) {
       } else {
         args <- dots
       }
-      result = py_call(attrib, args, keywords)
+      result <- py_call(attrib, args, keywords)
       if (is.null(result))
         invisible(result)
       else

@@ -23,7 +23,9 @@ typedef char argv_char_t;
 #include <Rcpp.h>
 using namespace Rcpp;
 
+
 #include "tensorflow_types.hpp"
+
 
 // helper class for ensuring decref of PyObject in the current scope
 template<typename T>
@@ -752,8 +754,23 @@ PyObject* r_to_py(RObject x) {
       return tuple.detach();
     }
   } else {
-    Rcpp::print(sexp);
-    stop("Unable to convert R object to python type");
+//    Rcpp::print(sexp); // Why?
+    SEXP call;
+    SEXP pyns = R_FindNamespace(Rf_mkString("python"));
+    if(pyns == R_UnboundValue)
+      stop("missing python R package namespace: this is not happening");
+    PROTECT(pyns);
+    call = Rf_findVarInFrame3(pyns, Rf_install("r_r_to_py"), TRUE);
+    UNPROTECT(1);
+    if(pyns == R_UnboundValue)
+      stop("missing r_r_to_py function; this is not happening");
+    PROTECT(call = Rf_lang2(call, x));
+    SEXP ans = Rf_eval(call, R_GlobalEnv); // XXX should really be parent.frame(), not R_GlobalEnv FIXME
+    UNPROTECT(1);
+    PyObjectXPtr obj = as<PyObjectXPtr>(ans);
+    ::Py_IncRef(obj.get());
+    return obj.get();
+    //stop("Unable to convert R object to python type");
   }
 }
 
