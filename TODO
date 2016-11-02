@@ -1,5 +1,4 @@
 - add sparse matrix support, at least for a subset of sparse matrices
   (dgCMatrix?)
 
-- remove more not neccessary stuff left over from tensorflow
 - new tests and examples
