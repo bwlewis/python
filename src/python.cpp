@@ -345,6 +345,8 @@ int narrow_array_typenum(PyArray_Descr* descr) {
 // convert a python object to an R object
 SEXP py_to_r(PyObject* x) {
 
+  ::Py_IncRef(x); // XXX what about this. how to force copy here?
+
   // NULL for Python None
   if (py_is_none(x))
     return R_NilValue;
@@ -572,7 +574,6 @@ SEXP py_to_r(PyObject* x) {
     SEXP ans = Rf_eval(call, R_GlobalEnv);
     UNPROTECT(1);
     if(Rf_isNull(ans)) {
-      ::Py_IncRef(x);
       return py_xptr(x);
     }
     return ans;

@@ -224,8 +224,26 @@ with.tensorflow.builtin.object <- function(data, expr, as = NULL, ...) {
 
 #' Convert Python objects to R
 #'
+#' The python package defers conversion of Python objects into R
+#' objects in order to allow composition of Python objects. Use
+#' the \code{R} function to convert a Python object into an R
+#' value.
 #' @param x a Python object
 #' @return a converted R value
+#' @note The \code{R} function copies data from Python to R.
+#' @examples
+#' \dontrun{
+#' np <- import("numpy")
+#' x <- matrix(1:9, 3)
+#' p <- np$matrix(x)
+#' p$sum()     # Python scalar value
+#' R(p$sum())  # R scalar value
+#'
+#' l <- np$linalg$eig(p)  # Python list
+#' # compare with R's eigen function
+#' eigen(x)$values - R(l)[[1]]
+#' }
+#'
 #' @export
 R <- function(x) {
   if(isTRUE("externalptr" %in% class(x))) {
