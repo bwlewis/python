@@ -2,7 +2,8 @@
 % Please edit documentation in R/internal.R
 \name{r_py_to_r}
 \alias{r_py_to_r}
-\title{Convert miscellaneous Python objects to R objects}
+\title{Convert miscellaneous Python objects to R objects called by the
+py_to_r C function as a last conversion result}
 \usage{
 r_py_to_r(x)
 }
@@ -10,11 +11,12 @@ r_py_to_r(x)
 \item{x}{a python object}
 }
 \value{
-either a converted R object or the original python object if no
+either a converted R object or NULL if no
          suitable conversion could be found
 }
 \description{
-Convert miscellaneous Python objects to R objects
+Convert miscellaneous Python objects to R objects called by the
+py_to_r C function as a last conversion result
 }
 \keyword{internal}
 

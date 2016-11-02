@@ -557,11 +557,25 @@ SEXP py_to_r(PyObject* x) {
       stop("Unsupported array conversion from %d", typenum);
     }
   }
-
   // default is to return opaque wrapper to python object
   else {
-    ::Py_IncRef(x);
-    return py_xptr(x);
+    SEXP call;
+    SEXP pyns = R_FindNamespace(Rf_mkString("python"));
+    if(pyns == R_UnboundValue)
+      stop("missing python R package namespace: this is not happening");
+    PROTECT(pyns);
+    call = Rf_findVarInFrame3(pyns, Rf_install("r_py_to_r"), TRUE);
+    UNPROTECT(1);
+    if(call == R_UnboundValue)
+      stop("missing r_py_to_r function; this is not happening");
+    PROTECT(call = Rf_lang2(call, py_xptr(x)));
+    SEXP ans = Rf_eval(call, R_GlobalEnv);
+    UNPROTECT(1);
+    if(Rf_isNull(ans)) {
+      ::Py_IncRef(x);
+      return py_xptr(x);
+    }
+    return ans;
   }
 }
 
@@ -762,9 +776,9 @@ PyObject* r_to_py(RObject x) {
     PROTECT(pyns);
     call = Rf_findVarInFrame3(pyns, Rf_install("r_r_to_py"), TRUE);
     UNPROTECT(1);
-    if(pyns == R_UnboundValue)
+    if(call == R_UnboundValue)
       stop("missing r_r_to_py function; this is not happening");
-    PROTECT(call = Rf_lang2(call, x));
+    PROTECT(call = Rf_lang2(call, sexp));
     SEXP ans = Rf_eval(call, R_GlobalEnv); // XXX should really be parent.frame(), not R_GlobalEnv FIXME
     UNPROTECT(1);
     PyObjectXPtr obj = as<PyObjectXPtr>(ans);
@@ -965,8 +979,10 @@ SEXP py_call(PyObjectXPtr x, List args, List keywords = R_NilValue) {
   if (res.is_null())
     stop(py_fetch_error());
 
-  // return as r object
-  return py_to_r(res);
+  // return as python object pointer
+//  return py_to_r(res);
+  ::Py_IncRef(res);
+  return py_xptr(res);
 }
 
 

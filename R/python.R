@@ -222,4 +222,11 @@ with.tensorflow.builtin.object <- function(data, expr, as = NULL, ...) {
 
 
 
-
+#' Convert Python objects to R
+#'
+#' @param x a Python object
+#' @return a converted R value
+#' @export
+R <- function(x) {
+  .Call('tensorflow_py_to_r', PACKAGE = 'python', x)
+}
