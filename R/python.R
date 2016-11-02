@@ -228,5 +228,8 @@ with.tensorflow.builtin.object <- function(data, expr, as = NULL, ...) {
 #' @return a converted R value
 #' @export
 R <- function(x) {
-  .Call('tensorflow_py_to_r', PACKAGE = 'python', x)
+  if(isTRUE("externalptr" %in% class(x))) {
+    return(.Call('tensorflow_py_to_r', PACKAGE = 'python', x))
+  }
+  x
 }
