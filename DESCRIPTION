@@ -1,7 +1,7 @@
 Package: python
 Type: Package
 Title: Python Bindings for R
-Version: 0.3.0
+Version: 0.0.0
 Authors@R: c(
   person("JJ", "Allaire", role = c("aut", "cre"),
      comment = "R interface", email = "jj@rstudio.com"),
@@ -14,13 +14,16 @@ Authors@R: c(
          comment = "Examples and Tutorials"),
   person("Yuan", "Tang", role = c("ctb", "cph"),
          comment = "Examples and Tutorials",
-         email = "terrytangyuan@gmail.com")
+         email = "terrytangyuan@gmail.com"),
+  person("Bryan", "Lewis", role = c("ctb", "cph"),
+         comment = "General Python interface",
+         email = "blewis@illposed.net")
   )
 Description: 
 License: Apache License 2.0
-URL: https://github.com/rstudio/tensorflow
+URL: https://github.com/bwlewis/tensorflow/tree/rpy
 BugReports: https://github.com/rstudio/tensorflow/issues
-SystemRequirements: Python (>= 2.7.0) with header files and shared library
+SystemRequirements: Python (>= 2.7.0) and numpy with header files and shared libraries
 Encoding: UTF-8
 LazyData: true
 Depends:

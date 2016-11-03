@@ -26,7 +26,7 @@ import <- function(module, silent = FALSE) {
 
 
 #' @export
-print.tensorflow.builtin.object <- function(x, ...) {
+print.python.builtin.object <- function(x, ...) {
   str(x, ...)
 }
 
@@ -39,7 +39,7 @@ py_xptr_str <- function(object, expr) {
 
 #' @importFrom utils str
 #' @export
-str.tensorflow.builtin.object <- function(object, ...) {
+str.python.builtin.object <- function(object, ...) {
   if (py_is_null_xptr(object))
     cat("<pointer: 0x0>\n")
   else {
@@ -58,7 +58,7 @@ str.tensorflow.builtin.object <- function(object, ...) {
 
 #' @importFrom Matrix sparseMatrix
 #' @export
-`$.tensorflow.builtin.object` <- function(x, name) {
+`$.python.builtin.object` <- function(x, name) {
   attrib <- py_get_attr(x, name)
   if (py_is_callable(attrib)) {
     f <- function(...) {
@@ -93,12 +93,12 @@ str.tensorflow.builtin.object <- function(object, ...) {
 }
 
 #' @export
-`[[.tensorflow.builtin.object` <- `$.tensorflow.builtin.object`
+`[[.python.builtin.object` <- `$.python.builtin.object`
 
 
 #' @importFrom utils .DollarNames
 #' @export
-.DollarNames.tensorflow.builtin.object <- function(x, pattern = "") {
+.DollarNames.python.builtin.object <- function(x, pattern = "") {
 
   # skip if this is a NULL xptr
   if (py_is_null_xptr(x))
@@ -112,7 +112,7 @@ str.tensorflow.builtin.object <- function(object, ...) {
   attr(names, "types") <- py_get_attribute_types(x, names)
 
   # specify a help_handler
-  attr(names, "helpHandler") <- "tensorflow:::help_handler"
+  attr(names, "helpHandler") <- "python:::help_handler"
 
   # return
   names
@@ -153,7 +153,7 @@ dict <- function(...) {
 
 #' Evaluate an expression within a context.
 #'
-#' The \code{with} method for objects of type \code{tensorflow.builtin.object}
+#' The \code{with} method for objects of type \code{python.builtin.object}
 #' implements the context manager protocol used by the Python \code{with}
 #' statement. The passed object must implement the
 #' \href{https://docs.python.org/2/reference/datamodel.html#context-managers}{context
@@ -166,7 +166,7 @@ dict <- function(...) {
 #' @param ... Unused
 #'
 #' @export
-with.tensorflow.builtin.object <- function(data, expr, as = NULL, ...) {
+with.python.builtin.object <- function(data, expr, as = NULL, ...) {
 
   # enter the context
   context <- data$`__enter__`()
@@ -247,7 +247,7 @@ with.tensorflow.builtin.object <- function(data, expr, as = NULL, ...) {
 #' @export
 R <- function(x) {
   if(isTRUE("externalptr" %in% class(x))) {
-    return(.Call('tensorflow_py_to_r', PACKAGE = 'python', x))
+    return(.Call('python_py_to_r', PACKAGE = 'python', x))
   }
   x
 }

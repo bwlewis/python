@@ -24,7 +24,7 @@ typedef char argv_char_t;
 using namespace Rcpp;
 
 
-#include "tensorflow_types.hpp"
+#include "python_types.hpp"
 
 
 // helper class for ensuring decref of PyObject in the current scope
@@ -157,10 +157,10 @@ std::string as_r_class(PyObject* classPtr) {
   std::string module = as_std_string(modulePtr) + ".";
   std::string builtin("__builtin__");
   if (module.find(builtin) == 0)
-    module.replace(0, builtin.length(), "tensorflow.builtin");
+    module.replace(0, builtin.length(), "python.builtin");
   std::string builtins("builtins");
   if (module.find(builtins) == 0)
-    module.replace(0, builtins.length(), "tensorflow.builtin");
+    module.replace(0, builtins.length(), "python.builtin");
   ostr << module << as_std_string(namePtr);
   return ostr.str();
 }
@@ -191,10 +191,10 @@ PyObjectXPtr py_xptr(PyObject* object, bool decref = true) {
     }
   }
 
-  // add tensorflow.builtin.object if we don't already have it
-  if (std::find(attrClass.begin(), attrClass.end(), "tensorflow.builtin.object")
+  // add python.builtin.object if we don't already have it
+  if (std::find(attrClass.begin(), attrClass.end(), "python.builtin.object")
                                                       == attrClass.end()) {
-    attrClass.push_back("tensorflow.builtin.object");
+    attrClass.push_back("python.builtin.object");
   }
 
   // add externalptr
@@ -596,7 +596,7 @@ PyObject* r_to_py(RObject x) {
 
   // pass python objects straight through (Py_IncRef since returning this
   // creates a new reference from the caller)
-  } else if (x.inherits("tensorflow.builtin.object")) {
+  } else if (x.inherits("python.builtin.object")) {
     PyObjectXPtr obj = as<PyObjectXPtr>(sexp);
     ::Py_IncRef(obj.get());
     return obj.get();

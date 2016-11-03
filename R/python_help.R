@@ -26,16 +26,16 @@ help_topics <- function(page, prefix, symbols) {
 help_handler <- function(type = c("completion", "parameter", "url"), topic, source, ...) {
   type <- match.arg(type)
   if (type == "completion") {
-    help_completion_handler.tensorflow.builtin.object(topic, source)
+    help_completion_handler.python.builtin.object(topic, source)
   } else if (type == "parameter") {
-    help_completion_parameter_handler.tensorflow.builtin.object(source)
+    help_completion_parameter_handler.python.builtin.object(source)
   } else if (type == "url") {
-    help_url_handler.tensorflow.builtin.object(topic, source)
+    help_url_handler.python.builtin.object(topic, source)
   }
 }
 
 # Return help for display in the completion popup window
-help_completion_handler.tensorflow.builtin.object <- function(topic, source) {
+help_completion_handler.python.builtin.object <- function(topic, source) {
 
   # convert source to object if necessary
   source <- source_as_object(source)
@@ -77,7 +77,7 @@ help_completion_handler.tensorflow.builtin.object <- function(topic, source) {
 
 
 # Return parameter help for display in the completion popup window
-help_completion_parameter_handler.tensorflow.builtin.object <- function(source) {
+help_completion_parameter_handler.python.builtin.object <- function(source) {
 
   # split into topic and source
   components <- source_components(source)
@@ -111,7 +111,7 @@ help_completion_parameter_handler.tensorflow.builtin.object <- function(source) 
 
 
 # Handle requests for external (F1) help
-help_url_handler.tensorflow.builtin.object <- function(topic, source) {
+help_url_handler.python.builtin.object <- function(topic, source) {
 
   # normalize topic and source for various calling scenarios
   if (grepl(" = $", topic)) {
@@ -142,7 +142,7 @@ help_url_handler.tensorflow.builtin.object <- function(topic, source) {
 
 
 # Handle requests for the list of arguments for a function
-help_formals_handler.tensorflow.builtin.object <- function(topic, source) {
+help_formals_handler.python.builtin.object <- function(topic, source) {
 
   if (py_has_attr(source, topic)) {
     target <- py_get_attr(source, topic)
@@ -152,7 +152,7 @@ help_formals_handler.tensorflow.builtin.object <- function(topic, source) {
       if (!is.null(args)) {
         return(list(
           formals = args,
-          helpHandler = "tensorflow:::help_handler"
+          helpHandler = "python:::help_handler"
         ))
       }
     }
