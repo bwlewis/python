@@ -30,6 +30,7 @@ r_py_to_r <- function(x)
 r_r_to_py <- function(x)
 {
   c <- class(x)
+  sp <- import("scipy.sparse")
   if("dgCMatrix" %in% c) return(
     sp$csc_matrix(list(x@x, x@i, x@p), dim(x))
   )
