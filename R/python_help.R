@@ -1,3 +1,16 @@
+#' Simple Python topic help
+#'
+#' Equivalent to \code{help(topic)} issued from Python.
+#' @param topic character-valued Python help topic
+#' @return Python help text
+#' @examples
+#' phelp("numpy.linalg.svd")
+#' @export
+phelp <- function(topic)
+{
+  py_run_string(sprintf("help('%s')", topic))
+}
+
 # Register a set of help topics for dispatching from F1 help
 register_help_topics <- function(type = c("module", "class"), topics) {
 
@@ -266,8 +279,3 @@ class_help <- function(class, topic) {
 # Environments where we store help topics (mappings of module/class name to URL)
 .module_help_topics <- new.env(parent = emptyenv())
 .class_help_topics <- new.env(parent = emptyenv())
-
-
-
-
-

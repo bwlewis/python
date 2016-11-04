@@ -72,4 +72,3 @@ py_run_string <- function(code) {
 py_run_file <- function(file) {
     invisible(.Call('python_py_run_file', PACKAGE = 'python', file))
 }
-

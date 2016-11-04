@@ -1,6 +1,5 @@
 - add sparse matrix support, at least for a subset of sparse matrices
   (dgCMatrix?)
-
 - new tests and examples
-
 - note dependencies, Rcpp >=12.6, python-dev, python-numpy (debian)
+- Improve phelp function to simulate built-in help
