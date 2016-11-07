@@ -652,76 +652,67 @@ PyObject* r_to_py(RObject x) {
     // return it
     return matrix;
 
-  // integer (pass length 1 vectors as scalars, otherwise pass list)
+  // integer (pass length 1 vectors as scalars, otherwise 1d ndarray)
   } else if (type == INTSXP) {
     if (LENGTH(sexp) == 1) {
       int value = INTEGER(sexp)[0];
       return ::PyInt_FromLong(value);
     } else {
-      PyObjectPtr list(::PyList_New(LENGTH(sexp)));
-      for (R_xlen_t i = 0; i<LENGTH(sexp); i++) {
-        int value = INTEGER(sexp)[i];
-        // NOTE: reference to added value is "stolen" by the list
-        int res = ::PyList_SetItem(list, i, ::PyInt_FromLong(value));
-        if (res != 0)
-          stop(py_fetch_error());
-      }
-      return list.detach();
+      npy_intp dims = LENGTH(sexp);
+      int typenum = NPY_INT, nd = 1;
+      void* data = (void *)INTEGER(sexp);
+      PyObject* matrix = PyArray_New(&PyArray_Type, nd, &dims, typenum, NULL, data, 0, NPY_ARRAY_FARRAY_RO, NULL);
+      if (matrix == NULL)
+        stop(py_fetch_error());
+      return matrix;
     }
 
-  // numeric (pass length 1 vectors as scalars, otherwise pass list)
+  // numeric (pass length 1 vectors as scalars, otherwise as 1d ndarray)
   } else if (type == REALSXP) {
     if (LENGTH(sexp) == 1) {
       double value = REAL(sexp)[0];
       return ::PyFloat_FromDouble(value);
     } else {
-      PyObjectPtr list(PyList_New(LENGTH(sexp)));
-      for (R_xlen_t i = 0; i<LENGTH(sexp); i++) {
-        double value = REAL(sexp)[i];
-        // NOTE: reference to added value is "stolen" by the list
-        int res = ::PyList_SetItem(list, i, ::PyFloat_FromDouble(value));
-        if (res != 0)
-          stop(py_fetch_error());
-      }
-      return list.detach();
+      npy_intp dims = LENGTH(sexp);
+      int typenum = NPY_DOUBLE, nd = 1;
+      void* data = (void *)REAL(sexp);
+      PyObject* matrix = PyArray_New(&PyArray_Type, nd, &dims, typenum, NULL, data, 0, NPY_ARRAY_FARRAY_RO, NULL);
+      if (matrix == NULL)
+        stop(py_fetch_error());
+      return matrix;
     }
 
-  // complex (pass length 1 vectors as scalars, otherwise pass list)
+  // complex (pass length 1 vectors as scalars, otherwise 1d ndarray)
   } else if (type == CPLXSXP) {
     if (LENGTH(sexp) == 1) {
       Rcomplex cplx = COMPLEX(sexp)[0];
       return ::PyComplex_FromDoubles(cplx.r, cplx.i);
     } else {
-      PyObjectPtr list(PyList_New(LENGTH(sexp)));
-      for (R_xlen_t i = 0; i<LENGTH(sexp); i++) {
-        Rcomplex cplx = COMPLEX(sexp)[i];
-        // NOTE: reference to added value is "stolen" by the list
-        int res = ::PyList_SetItem(list, i, ::PyComplex_FromDoubles(cplx.r,
-                                                                    cplx.i));
-        if (res != 0)
-          stop(py_fetch_error());
-      }
-      return list.detach();
+      npy_intp dims = LENGTH(sexp);
+      int typenum = NPY_CDOUBLE, nd = 1;
+      void* data = (void *)COMPLEX(sexp);
+      PyObject* matrix = PyArray_New(&PyArray_Type, nd, &dims, typenum, NULL, data, 0, NPY_ARRAY_FARRAY_RO, NULL);
+      if (matrix == NULL)
+        stop(py_fetch_error());
+      return matrix;
     }
 
-  // logical (pass length 1 vectors as scalars, otherwise pass list)
+  // logical (pass length 1 vectors as scalars, otherwise 1d ndarray)
   } else if (type == LGLSXP) {
     if (LENGTH(sexp) == 1) {
       int value = LOGICAL(sexp)[0];
       return ::PyBool_FromLong(value);
     } else {
-      PyObjectPtr list(PyList_New(LENGTH(sexp)));
-      for (R_xlen_t i = 0; i<LENGTH(sexp); i++) {
-        int value = LOGICAL(sexp)[i];
-        // NOTE: reference to added value is "stolen" by the list
-        int res = ::PyList_SetItem(list, i, ::PyBool_FromLong(value));
-        if (res != 0)
-          stop(py_fetch_error());
-      }
-      return list.detach();
+      npy_intp dims = LENGTH(sexp);
+      int typenum = NPY_BOOL, nd = 1;
+      void* data = (void *)LOGICAL(sexp);
+      PyObject* matrix = PyArray_New(&PyArray_Type, nd, &dims, typenum, NULL, data, 0, NPY_ARRAY_FARRAY_RO, NULL);
+      if (matrix == NULL)
+        stop(py_fetch_error());
+      return matrix;
     }
 
-  // character (pass length 1 vectors as scalars, otherwise pass list)
+  // character (pass length 1 vectors as scalars, otherwise list)
   } else if (type == STRSXP) {
     if (LENGTH(sexp) == 1) {
       return as_python_str(STRING_ELT(sexp, 0));
