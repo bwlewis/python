@@ -4,9 +4,9 @@
 #' @param topic character-valued Python help topic
 #' @return Python help text
 #' @examples
-#' phelp("numpy.linalg.svd")
+#' pyhelp("numpy.linalg.svd")
 #' @export
-phelp <- function(topic)
+pyhelp <- function(topic)
 {
   py_run_string(sprintf("help('%s')", topic))
 }
