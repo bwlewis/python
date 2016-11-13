@@ -50,7 +50,7 @@ np = import("numpy")
 ```
 TAB completion works on most Python objects. R's dollar sign operator
 is used to access Python object methods and variables.
-For instance, try typing `np$<TAB>` to see a list of available numpy methods.
+For instance, try typing `np$<TAB>` to see a (long) list of available numpy methods, functions, and variables.
 
 Create an R matrix and copy it into a Python Numpy array object:
 ```{r}
@@ -59,7 +59,7 @@ x = matrix(rnorm(9), nrow=3)
 p = np$array(x)
 print(p)
 ```
-```
+```{sh}
 [[-0.62645381  1.5952808   0.48742905]
  [ 0.18364332  0.32950777  0.73832471]
  [-0.83562861 -0.82046838  0.57578135]]
