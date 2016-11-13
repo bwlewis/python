@@ -41,7 +41,7 @@ Install the package using the R `devtools` package with
 devtools::install_github("bwlewis/python")
 ```
 
-# Examples
+# Quick start
 
 Import the numpy library:
 ```{r}
@@ -59,7 +59,7 @@ x = matrix(rnorm(9), nrow=3)
 p = np$array(x)
 print(p)
 ```
-```{sh}
+```
 [[-0.62645381  1.5952808   0.48742905]
  [ 0.18364332  0.32950777  0.73832471]
  [-0.83562861 -0.82046838  0.57578135]]
@@ -130,4 +130,33 @@ R(p$prod()) + 1
 ```
 ```
 [1] 0.9914087
+```
+Or, with the matrices themselves:
+```{r}
+x - R(p)
+```
+```
+     [,1] [,2] [,3]
+[1,]    0    0    0
+[2,]    0    0    0
+[3,]    0    0    0
+```
+
+# Sparse matrices and more examples
+
+Right now (November, 2016), the package only understands double-precision
+general compressed, column-oriented sparse format. Hopefully soon more
+sparse matrix formats will be added (adding new format comprehension is
+pretty easy).
+
+```{r}
+library(Matrix)
+library(python)
+
+set.seed(1)
+x = sparseMatrix(i = sample(10, 10), j = sample(10, 10), x = runif(10), dims=c(10,10))
+
+sp = import("scipy.sparse")
+p = sp$csc_matrix(x)
+
 ```
